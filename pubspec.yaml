@@ -14,6 +14,7 @@ dependencies:
   firebase_analytics: ^11.3.6
   firebase_database: ^11.2.0
   firebase_messaging: ^15.1.6
+  google_mobile_ads: ^5.2.0
 
 dev_dependencies:
   flutter_test:

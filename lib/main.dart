@@ -1,5 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'tabsPage.dart';
@@ -10,6 +12,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  MobileAds.instance.initialize();
 
   runApp(const MyApp());
 }
@@ -19,6 +22,39 @@ class MyApp extends StatelessWidget {
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
   const MyApp({super.key});
+
+  _initFirebaseMessaging(BuildContext context) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      final localContext = context;
+
+      print(event.notification!.title);
+      print(event.notification!.body);
+
+      showDialog(
+        context: localContext,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('알림'),
+            content: Text(event.notification!.body!),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        }
+      );
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
+  }
+
+  _getToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    print("messaging.getToken(), ${await messaging.getToken()}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +66,25 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
       ),
       navigatorObservers: [observer],
-      // home: const MemoPage(), // 메모장 호출
       home: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
-          
+
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error'),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            _initFirebaseMessaging(context);
+            _getToken();
+            return const MemoPage();
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
