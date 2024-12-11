@@ -176,13 +176,16 @@ class _MemoPage extends State<MemoPage> {
             ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => MemoAddPage(reference: reference!),
-          ));
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 50),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => MemoAddPage(reference: reference!),
+            ));
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
