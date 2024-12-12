@@ -20,7 +20,7 @@ class _MemoAddPage extends State<MemoAddPage> {
   TextEditingController? contentController;
 
   InterstitialAd? _interstitialAd;
-  final adUnitId = 'ca-app-pub-7071641392557605/6179726155';
+  final adUnitId = 'ca-app-pub-7071641392557605/7722179590';
 
   void _showInterstitialAd() {
     if (_interstitialAd == null) {
