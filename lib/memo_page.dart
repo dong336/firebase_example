@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'memo.dart';
-import 'memoAdd.dart';
-import 'memoDetail.dart';
+import 'memo_add.dart';
+import 'memo_detail.dart';
 
 class MemoPage extends StatefulWidget {
   const MemoPage({super.key});

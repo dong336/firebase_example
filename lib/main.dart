@@ -4,8 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
-import 'tabsPage.dart';
-import 'memoPage.dart';
+import 'tabs_page.dart';
+import 'memo_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
